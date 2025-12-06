@@ -1,0 +1,941 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Grimurti Crypto - Belajar Cryptocurrency dari Nol</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        :root {
+            --primary: #f59e0b;
+            --secondary: #3b82f6;
+            --dark: #0f172a;
+            --light: #f8fafc;
+            --gray: #64748b;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            line-height: 1.6;
+            color: var(--dark);
+            background: var(--light);
+            overflow-x: hidden;
+        }
+
+        /* Hero Section */
+        .hero {
+            position: relative;
+            height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background: linear-gradient(135deg, #1e293b 0%, #334155 100%);
+            overflow: hidden;
+        }
+
+        .hero::before {
+            content: '';
+            position: absolute;
+            width: 200%;
+            height: 200%;
+            background: radial-gradient(circle, rgba(245, 158, 11, 0.1) 1px, transparent 1px);
+            background-size: 50px 50px;
+            animation: gridMove 20s linear infinite;
+        }
+
+        @keyframes gridMove {
+            0% { transform: translate(0, 0); }
+            100% { transform: translate(50px, 50px); }
+        }
+
+        .hero-content {
+            position: relative;
+            z-index: 2;
+            text-align: center;
+            color: white;
+            max-width: 900px;
+            padding: 2rem;
+            animation: fadeInUp 1s ease;
+        }
+
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(50px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .hero h1 {
+            font-size: 2.5rem;
+            font-weight: 800;
+            margin-bottom: 1rem;
+            background: linear-gradient(135deg, var(--primary), var(--secondary));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            animation: glow 2s ease-in-out infinite alternate;
+        }
+
+        @keyframes glow {
+            from { filter: drop-shadow(0 0 20px rgba(245, 158, 11, 0.5)); }
+            to { filter: drop-shadow(0 0 40px rgba(59, 130, 246, 0.5)); }
+        }
+
+        .hero p {
+            font-size: 1.5rem;
+            margin-bottom: 2rem;
+            opacity: 0.9;
+        }
+
+        .cta-button {
+            display: inline-block;
+            padding: 1rem 3rem;
+            background: linear-gradient(135deg, var(--primary), #fb923c);
+            color: white;
+            text-decoration: none;
+            border-radius: 50px;
+            font-size: 1.2rem;
+            font-weight: 600;
+            transition: all 0.3s ease;
+            box-shadow: 0 10px 30px rgba(245, 158, 11, 0.3);
+        }
+
+        .cta-button:hover {
+            transform: translateY(-5px) scale(1.05);
+            box-shadow: 0 15px 40px rgba(245, 158, 11, 0.5);
+        }
+
+        .floating-coins {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            top: 0;
+            left: 0;
+        }
+
+        .coin {
+            position: absolute;
+            width: 60px;
+            height: 60px;
+            background: linear-gradient(135deg, var(--primary), #fb923c);
+            border-radius: 50%;
+            opacity: 0.2;
+            animation: float 6s ease-in-out infinite;
+        }
+
+        .coin:nth-child(1) { top: 20%; left: 10%; animation-delay: 0s; }
+        .coin:nth-child(2) { top: 60%; left: 80%; animation-delay: 1s; }
+        .coin:nth-child(3) { top: 40%; left: 70%; animation-delay: 2s; }
+        .coin:nth-child(4) { top: 70%; left: 20%; animation-delay: 1.5s; }
+
+        @keyframes float {
+            0%, 100% { transform: translateY(0) rotate(0deg); }
+            50% { transform: translateY(-30px) rotate(180deg); }
+        }
+
+        /* Container */
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 2rem;
+        }
+
+        /* Section Styles */
+        section {
+            padding: 6rem 0;
+            position: relative;
+        }
+
+        .section-title {
+            text-align: center;
+            font-size: 3rem;
+            font-weight: 800;
+            margin-bottom: 1rem;
+            color: var(--dark);
+        }
+
+        .section-subtitle {
+            text-align: center;
+            font-size: 1.2rem;
+            color: var(--gray);
+            margin-bottom: 4rem;
+            max-width: 700px;
+            margin-left: auto;
+            margin-right: auto;
+        }
+
+        /* What is Crypto Section */
+        .intro-section {
+            background: white;
+        }
+
+        .intro-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 4rem;
+            align-items: center;
+        }
+
+        .intro-image {
+            width: 100%;
+            border-radius: 20px;
+            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.1);
+            transition: transform 0.3s ease;
+        }
+
+        .intro-image:hover {
+            transform: scale(1.05) rotate(2deg);
+        }
+
+        .intro-content h3 {
+            font-size: 2rem;
+            margin-bottom: 1rem;
+            color: var(--primary);
+        }
+
+        .intro-content p {
+            font-size: 1.1rem;
+            line-height: 1.8;
+            margin-bottom: 1rem;
+            color: var(--gray);
+        }
+
+        /* Features Grid */
+        .features-section {
+            background: linear-gradient(135deg, #f8fafc 0%, #e2e8f0 100%);
+        }
+
+        .features-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 2rem;
+        }
+
+        .feature-card {
+            background: white;
+            padding: 2rem;
+            border-radius: 20px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+            transition: all 0.3s ease;
+            border: 2px solid transparent;
+        }
+
+        .feature-card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 20px 50px rgba(0, 0, 0, 0.15);
+            border-color: var(--primary);
+        }
+
+        .feature-icon {
+            width: 80px;
+            height: 80px;
+            background: linear-gradient(135deg, var(--primary), #fb923c);
+            border-radius: 20px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 2.5rem;
+            margin-bottom: 1.5rem;
+            color: white;
+        }
+
+        .feature-card h3 {
+            font-size: 1.5rem;
+            margin-bottom: 1rem;
+            color: var(--dark);
+        }
+
+        .feature-card p {
+            color: var(--gray);
+            line-height: 1.6;
+        }
+
+        /* Crypto Types Section */
+        .crypto-types {
+            background: white;
+        }
+
+        .crypto-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 2rem;
+        }
+
+        .crypto-card {
+            background: linear-gradient(135deg, var(--dark) 0%, #1e293b 100%);
+            padding: 2rem;
+            border-radius: 20px;
+            text-align: center;
+            transition: all 0.3s ease;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .crypto-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.1), transparent);
+            transition: left 0.5s ease;
+        }
+
+        .crypto-card:hover::before {
+            left: 100%;
+        }
+
+        .crypto-card:hover {
+            transform: scale(1.05);
+        }
+
+        .crypto-logo {
+            width: 100px;
+            height: 100px;
+            margin: 0 auto 1.5rem;
+            background: linear-gradient(135deg, var(--primary), var(--secondary));
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 3rem;
+            color: white;
+        }
+
+        .crypto-card h3 {
+            font-size: 1.8rem;
+            margin-bottom: 0.5rem;
+            color: white;
+        }
+
+        .crypto-card .crypto-symbol {
+            color: var(--primary);
+            font-size: 1.2rem;
+            margin-bottom: 1rem;
+        }
+
+        .crypto-card p {
+            color: #94a3b8;
+            line-height: 1.6;
+        }
+
+        /* How it Works Section */
+        .how-it-works {
+            background: linear-gradient(135deg, var(--dark) 0%, #1e293b 100%);
+            color: white;
+        }
+
+        .timeline {
+            position: relative;
+            max-width: 800px;
+            margin: 0 auto;
+        }
+
+        .timeline-item {
+            display: flex;
+            gap: 2rem;
+            margin-bottom: 3rem;
+            position: relative;
+        }
+
+        .timeline-number {
+            width: 60px;
+            height: 60px;
+            background: linear-gradient(135deg, var(--primary), #fb923c);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.5rem;
+            font-weight: 800;
+            flex-shrink: 0;
+            box-shadow: 0 5px 20px rgba(245, 158, 11, 0.5);
+        }
+
+        .timeline-content {
+            flex: 1;
+        }
+
+        .timeline-content h3 {
+            font-size: 1.8rem;
+            margin-bottom: 0.5rem;
+            color: var(--primary);
+        }
+
+        .timeline-content p {
+            color: #cbd5e1;
+            line-height: 1.8;
+        }
+
+        /* Benefits Section */
+        .benefits-section {
+            background: white;
+        }
+
+        .benefits-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 3rem;
+        }
+
+        .benefit-item {
+            display: flex;
+            gap: 1.5rem;
+            padding: 2rem;
+            background: #f8fafc;
+            border-radius: 15px;
+            transition: all 0.3s ease;
+        }
+
+        .benefit-item:hover {
+            background: white;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+            transform: translateX(10px);
+        }
+
+        .benefit-icon {
+            width: 50px;
+            height: 50px;
+            background: linear-gradient(135deg, var(--primary), #fb923c);
+            border-radius: 10px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.5rem;
+            color: white;
+            flex-shrink: 0;
+        }
+
+        .benefit-content h4 {
+            font-size: 1.3rem;
+            margin-bottom: 0.5rem;
+            color: var(--dark);
+        }
+
+        .benefit-content p {
+            color: var(--gray);
+            line-height: 1.6;
+        }
+
+        /* CTA Section */
+        .cta-section {
+            background: linear-gradient(135deg, var(--primary) 0%, #fb923c 100%);
+            color: white;
+            text-align: center;
+            padding: 6rem 2rem;
+        }
+
+        .cta-section h2 {
+            font-size: 3rem;
+            margin-bottom: 1rem;
+        }
+
+        .cta-section p {
+            font-size: 1.3rem;
+            margin-bottom: 2rem;
+            opacity: 0.9;
+        }
+
+        .cta-button-white {
+            display: inline-block;
+            padding: 1rem 3rem;
+            background: white;
+            color: var(--primary);
+            text-decoration: none;
+            border-radius: 50px;
+            font-size: 1.2rem;
+            font-weight: 600;
+            transition: all 0.3s ease;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+        }
+
+        .cta-button-white:hover {
+            transform: translateY(-5px) scale(1.05);
+            box-shadow: 0 15px 40px rgba(0, 0, 0, 0.3);
+        }
+
+        /* Footer */
+        footer {
+            background: var(--dark);
+            color: white;
+            text-align: center;
+            padding: 2rem;
+        }
+
+        footer p {
+            opacity: 0.7;
+        }
+
+        /* Media Queries untuk Responsivitas */
+        /* Untuk tablet dan HP (lebar <= 768px) */
+        @media (max-width: 768px) {
+            nav {
+                flex-direction: column; /* Menu vertikal di mobile */
+            }
+            .container {
+                padding: 1rem;
+            }
+            .image-gallery {
+                grid-template-columns: repeat(auto-fit, minmax(150px, 1fr)); /* Kolom lebih kecil */
+            }
+        }
+
+        /* Untuk HP kecil (lebar <= 480px) */
+        @media (max-width: 480px) {
+            header h1 {
+                font-size: 1.5rem;
+            }
+            .content {
+                padding: 0.5rem;
+            }
+            .image-gallery {
+                grid-template-columns: 1fr; /* Satu kolom di layar sangat kecil */
+            }
+        }
+
+        /* Khusus untuk orientasi landscape (lebar > tinggi, misal di HP landscape) */
+        @media (orientation: landscape) and (max-width: 768px) {
+            .container {
+                grid-template-columns: 1fr 1fr; /* Dua kolom di landscape mobile */
+            }
+            .image-gallery {
+                grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); /* Kolom lebih lebar */
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Hero Section -->
+    <section class="hero">
+        <div class="floating-coins">
+            <div class="coin"></div>
+            <div class="coin"></div>
+            <div class="coin"></div>
+            <div class="coin"></div>
+        </div>
+        <div class="hero-content">
+          <div class="separator" style="clear: both;"><a href="https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEjpFavblrpLC3IhsHf4u7JXaCCpL3iEooj1PLqe7_3RrCzEDkFFd8fXu3vmJqSQWPzQ1101r1jtFk5Brnf2f0hjSqYDTH5vD4OENgrQ2h3Zrt5xlwtK7t2E9xRWOhMe9OXoAHfs3-bcNLUbIRweRssvAAujlCyU0rzPLCYU8KbZXeXX7Cku3rWNitIMSv5b/s1000/WM%20Grimurti%2033.png" style="display: block; padding: 1em 0; text-align: center; "><img alt="" border="0" width="300" data-original-height="1000" data-original-width="1000" src="https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEjpFavblrpLC3IhsHf4u7JXaCCpL3iEooj1PLqe7_3RrCzEDkFFd8fXu3vmJqSQWPzQ1101r1jtFk5Brnf2f0hjSqYDTH5vD4OENgrQ2h3Zrt5xlwtK7t2E9xRWOhMe9OXoAHfs3-bcNLUbIRweRssvAAujlCyU0rzPLCYU8KbZXeXX7Cku3rWNitIMSv5b/s200/WM%20Grimurti%2033.png"/></a></div>
+            <h1>Grimurti Crypto</h1>
+            <p>Pelajari Dunia Cryptocurrency dari Dasar</p>
+            <a href="#mulai" class="cta-button">Mulai Belajar Sekarang</a>
+        </div>
+    </section>
+
+    <!-- What is Crypto Section -->
+    <section class="intro-section" id="mulai">
+        <div class="container">
+            <div class="intro-grid fade-in">
+                <div>
+                    <div class="separator" style="clear: both;"><a href="https://t.me/grimurti" style="display: block; padding: 1em 0px; text-align: center;"><br /></a><div class="separator" style="clear: both; text-align: center;"><a href="https://t.me/grimurti" style="margin-left: 1em; margin-right: 1em;"><img alt="" data-original-height="367" data-original-width="650" height="181" src="https://blogger.googleusercontent.com/img/a/AVvXsEj2dJ7VlUXZabOPlYDOkVA9ptAtUWzXaZ-LsnOGlr6IkWcZBPEqgQ1d6Akuz6uj6fhTXlGEXV5bSdPEHod4arGheOoOuew3L-FNIi316PBdXCitEWad9wG1JZv6vPix9A0SVnNrtzhw-eh-iOjVFAOaBqKml2WNTVa85J7uC77aeZb-ZdPVincTfQgfAMiz" width="320" /></a></div><br /></div>
+                </div>
+                <div class="intro-content">
+                    <h3>Apa itu Cryptocurrency?</h3>
+                    <p>Cryptocurrency adalah mata uang digital yang menggunakan teknologi kriptografi untuk mengamankan transaksi dan mengontrol penciptaan unit baru. Berbeda dengan mata uang tradisional, cryptocurrency beroperasi secara terdesentralisasi melalui teknologi blockchain.</p>
+                    <p>Cryptocurrency memungkinkan transfer aset digital peer-to-peer tanpa memerlukan perantara seperti bank atau lembaga keuangan lainnya. Setiap transaksi dicatat dalam buku besar digital yang tidak dapat diubah dan dapat diakses oleh siapa saja.</p>
+                    <p>Bitcoin, yang diluncurkan pada tahun 2009, adalah cryptocurrency pertama dan paling terkenal. Sejak itu, ribuan cryptocurrency lain telah dibuat, masing-masing dengan fitur dan tujuan uniknya sendiri.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Features Section -->
+    <section class="features-section">
+        <div class="container">
+            <h2 class="section-title fade-in">Kenapa Belajar Cryptocurrency?</h2>
+            <p class="section-subtitle fade-in">Cryptocurrency adalah masa depan keuangan digital dengan potensi yang sangat besar</p>
+            <div class="features-grid">
+                <div class="feature-card fade-in">
+                    <p>&nbsp;</p><div class="separator" style="clear: both; text-align: center;"><a href="https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEi0frvjCg2z6kL5KJYn5hYLHUmKQbCPMsnef0tD3RPM5OPTenrwi4nbOAhDmIawCe7qqfUustTfuel9DwZWxA49Bv5UtFfXJ9XI_EvMLiyO_lDS71o2_6tGH-4DNkRyPBeMnkV6ZxvIbuvyHcOMikMjR1vszmGc4KzYYBM7Nj8L04dV6auV8ASBi1g7GtEs/s512/11485970.png" imageanchor="1" style="margin-left: 1em; margin-right: 1em;"><img border="0" data-original-height="512" data-original-width="512" height="200" src="https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEi0frvjCg2z6kL5KJYn5hYLHUmKQbCPMsnef0tD3RPM5OPTenrwi4nbOAhDmIawCe7qqfUustTfuel9DwZWxA49Bv5UtFfXJ9XI_EvMLiyO_lDS71o2_6tGH-4DNkRyPBeMnkV6ZxvIbuvyHcOMikMjR1vszmGc4KzYYBM7Nj8L04dV6auV8ASBi1g7GtEs/w200-h200/11485970.png" width="200" /></a></div><br /><p></p>
+                    <h3>Teknologi Masa Depan</h3>
+                    <p>Blockchain dan crypto adalah fondasi dari ekonomi digital masa depan. Memahaminya membuka peluang karir dan investasi yang luas.</p>
+                </div>
+                <div class="feature-card fade-in">
+                    <p>&nbsp;</p><div class="separator" style="clear: both; text-align: center;"><a href="https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEjzOwgCocGtkQdZvUgCT9Ad8zd4skiLmgyHUslUwx3E2f3xd03COGog92M-9CavVphDa04z95YsFsbEhgpnR2DqQX5K6DYXSb-raEUJN-y078leVMh_x-ch24jxg2-RNytqGpT9CswYtbG-KW_8Ndm6vj3DNcIeklz1qEhzPiQjtrLk5hPRoSFGRroi7E-x/s512/Potensi%20Keuntungan.png" imageanchor="1" style="margin-left: 1em; margin-right: 1em;"><img border="0" data-original-height="512" data-original-width="512" height="200" src="https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEjzOwgCocGtkQdZvUgCT9Ad8zd4skiLmgyHUslUwx3E2f3xd03COGog92M-9CavVphDa04z95YsFsbEhgpnR2DqQX5K6DYXSb-raEUJN-y078leVMh_x-ch24jxg2-RNytqGpT9CswYtbG-KW_8Ndm6vj3DNcIeklz1qEhzPiQjtrLk5hPRoSFGRroi7E-x/w200-h200/Potensi%20Keuntungan.png" width="200" /></a></div><br /><p></p>
+                    <h3>Potensi Keuntungan</h3>
+                    <p>Banyak investor awal cryptocurrency yang telah meraih keuntungan signifikan. Dengan pengetahuan yang tepat, Anda bisa membuat keputusan investasi yang lebih baik.</p>
+                </div>
+                <div class="feature-card fade-in">
+                    <p>&nbsp;</p><div class="separator" style="clear: both; text-align: center;"><a href="https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEh3eXu6xOpKsMx6wfj928G15mvwtNSv0jOgkDNYSnSieC2M767Aec0iKEuVODg_5lhH7OvV7rt-H0clc7F1nZgbC7qVSKBeSERIReog2Tfky7dVFVp8XegtZNPUgKxqL8GigDWCLbMLm4_Pyvf3wkr2p9wuoUcyCxq3l43EIqag9yIji00S1aUx87x3lQfa/s512/Keamanan%20&amp;%20Privasi.png" imageanchor="1" style="margin-left: 1em; margin-right: 1em;"><img border="0" data-original-height="512" data-original-width="512" height="200" src="https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEh3eXu6xOpKsMx6wfj928G15mvwtNSv0jOgkDNYSnSieC2M767Aec0iKEuVODg_5lhH7OvV7rt-H0clc7F1nZgbC7qVSKBeSERIReog2Tfky7dVFVp8XegtZNPUgKxqL8GigDWCLbMLm4_Pyvf3wkr2p9wuoUcyCxq3l43EIqag9yIji00S1aUx87x3lQfa/w200-h200/Keamanan%20&amp;%20Privasi.png" width="200" /></a></div><br /><p></p>
+                    <h3>Keamanan & Privasi</h3>
+                    <p>Teknologi kriptografi memberikan tingkat keamanan yang tinggi. Transaksi terenkripsi dan identitas pengguna terlindungi.</p>
+                </div>
+                <div class="feature-card fade-in">
+                    <p>&nbsp;</p><div class="separator" style="clear: both; text-align: center;"><a href="https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEiSTsBSe7_iwrUyXKtlwovg82NvEK4icYhBIGOrUMkIT4NjEbCv7IDpQPU_lDlFZrKU1w464PY620HcvYUu3Uey49Jnjhy17sKbGbtY6bNI_ZVs3K39Ns9KD8z1btEEsWFQdqvoIzVXbksUKJ83UTSSlagiUnqeZOhsUdNge7_fkDEimCci9FIAl54NHM5-/s512/Transaksi%20Global.png" imageanchor="1" style="margin-left: 1em; margin-right: 1em;"><img border="0" data-original-height="512" data-original-width="512" height="200" src="https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEiSTsBSe7_iwrUyXKtlwovg82NvEK4icYhBIGOrUMkIT4NjEbCv7IDpQPU_lDlFZrKU1w464PY620HcvYUu3Uey49Jnjhy17sKbGbtY6bNI_ZVs3K39Ns9KD8z1btEEsWFQdqvoIzVXbksUKJ83UTSSlagiUnqeZOhsUdNge7_fkDEimCci9FIAl54NHM5-/w200-h200/Transaksi%20Global.png" width="200" /></a></div><br /><p></
+                    <h3>Transaksi Global</h3>
+                    <p>Kirim dan terima uang dari mana saja di dunia tanpa batasan geografis atau biaya transfer yang mahal.</p>
+                </div>
+                <div class="feature-card fade-in">
+                    <div class="separator" style="clear: both;"><a href="https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEiXCthLqPVH27XnQLouCT7DdcGyAkJOQAzWbkubG7GuOsPooNSVCOa_rv4v0K1euAMWc3-r9lcWc9WNjzIiHYltGgqsI4oG6KSmb8r0FXV6jMQrCAG1JcjXJdeXS1_31f1wWy-nPLIZNcTo4KhgENBrfRfbp7grDzJYhXtklTxvbpjNuBSlhYKvi48RTlKN/s512/Cepat%20&amp;%20Efisien.png" style="display: block; padding: 1em 0; text-align: center; "><img alt="" border="0" width="200" data-original-height="512" data-original-width="512" src="https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEiXCthLqPVH27XnQLouCT7DdcGyAkJOQAzWbkubG7GuOsPooNSVCOa_rv4v0K1euAMWc3-r9lcWc9WNjzIiHYltGgqsI4oG6KSmb8r0FXV6jMQrCAG1JcjXJdeXS1_31f1wWy-nPLIZNcTo4KhgENBrfRfbp7grDzJYhXtklTxvbpjNuBSlhYKvi48RTlKN/s200/Cepat%20&amp;%20Efisien.png"/></a></div>
+                    <h3>Cepat & Efisien</h3>
+                    <p>Transaksi cryptocurrency dapat diselesaikan dalam hitungan menit, jauh lebih cepat dibanding transfer bank tradisional.</p>
+                </div>
+                <div class="feature-card fade-in">
+                    <div class="separator" style="clear: both;"><a href="https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEip2Oteh5bzmcGXiPWzpMgnVGJ1mjwkRvIXT9r_ewZEE163R6XOgDnk3ljU1DyzTn42D_JvQd2vk05K6CvjTdNxniCzkX8f7e8MOHzTE6Ahb00WCOStFNXXI-6XkHS35QGKLQ-rp9tJ9_cvUKXEtLTO-VikURQ3MS9L03hX1HmtAaHZ4zjZ6UsRznFaOif2/s512/Mudah%20Dipelajari.png" style="display: block; padding: 1em 0; text-align: center; "><img alt="" border="0" width="200" data-original-height="512" data-original-width="512" src="https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEip2Oteh5bzmcGXiPWzpMgnVGJ1mjwkRvIXT9r_ewZEE163R6XOgDnk3ljU1DyzTn42D_JvQd2vk05K6CvjTdNxniCzkX8f7e8MOHzTE6Ahb00WCOStFNXXI-6XkHS35QGKLQ-rp9tJ9_cvUKXEtLTO-VikURQ3MS9L03hX1HmtAaHZ4zjZ6UsRznFaOif2/s200/Mudah%20Dipelajari.png"/></a></div>
+                    <h3>Mudah Dipelajari</h3>
+                    <p>Dengan panduan yang tepat, siapa saja bisa memahami dan mulai menggunakan cryptocurrency, bahkan pemula sekalipun.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+<!-- Crypto Types Section -->
+    <section class="crypto-types">
+        <div class="container">
+            <h2 class="section-title fade-in">Jenis-Jenis Cryptocurrency Populer</h2>
+            <p class="section-subtitle fade-in">Kenali berbagai cryptocurrency yang mendominasi pasar saat ini</p>
+            <div class="crypto-grid">
+                <div class="crypto-card fade-in">
+                    <div class="separator" style="clear: both;"><a href="https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEicdxLx5jWMaLxb1pAbFnpyEd-G-_MkawuSv4P91uhaoD5uHQhXy3mGM3RuKEBjA5FV5ygEnTK23KS5qkj7wDUrvSZj6SpCXMKiNABKYAXsPnvr-hDWVALtAnEe8ixt6H-tNgquLTdyhhRYvnwIpiHSfqKAUb4Yo9k9b25Jihxxvh_nVWYcNf3ZK793Fk1H/s512/btc.png" style="display: block; padding: 1em 0; text-align: center; "><img alt="" border="0" width="200" data-original-height="512" data-original-width="512" src="https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEicdxLx5jWMaLxb1pAbFnpyEd-G-_MkawuSv4P91uhaoD5uHQhXy3mGM3RuKEBjA5FV5ygEnTK23KS5qkj7wDUrvSZj6SpCXMKiNABKYAXsPnvr-hDWVALtAnEe8ixt6H-tNgquLTdyhhRYvnwIpiHSfqKAUb4Yo9k9b25Jihxxvh_nVWYcNf3ZK793Fk1H/s200/btc.png"/></a></div>
+                    <h3>Bitcoin</h3>
+                    <p class="crypto-symbol">BTC</p>
+                    <p>Cryptocurrency pertama dan paling populer. Bitcoin adalah "emas digital" dengan kapitalisasi pasar terbesar dan diterima secara luas sebagai alat pembayaran.</p>
+                </div>
+                <div class="crypto-card fade-in">
+                    <div class="separator" style="clear: both;"><a href="https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEhcwfexDKiR_oO98Y-eyN8QlNn7L3SWIda1-uP1mJebJbw5WH3qLmAcr-l-cWjTProoT3EAbLsGymFBUNIKZtuFu-FN5NPrRQ_WUfF-4w_KFiJe5-ZTyeM98ZiIQ6RsakQpVQjE8QwWr4MQ3UcFwvd6EUw2QJqdp4EkHEyVaXPe0DwYEDKZSLFUFMuledNt/s512/eth.png" style="display: block; padding: 1em 0; text-align: center; "><img alt="" border="0" width="200" data-original-height="512" data-original-width="512" src="https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEhcwfexDKiR_oO98Y-eyN8QlNn7L3SWIda1-uP1mJebJbw5WH3qLmAcr-l-cWjTProoT3EAbLsGymFBUNIKZtuFu-FN5NPrRQ_WUfF-4w_KFiJe5-ZTyeM98ZiIQ6RsakQpVQjE8QwWr4MQ3UcFwvd6EUw2QJqdp4EkHEyVaXPe0DwYEDKZSLFUFMuledNt/s200/eth.png"/></a></div>
+                    <h3>Ethereum</h3>
+                    <p class="crypto-symbol">ETH</p>
+                    <p>Platform blockchain yang memungkinkan smart contracts dan aplikasi terdesentralisasi (DApps). ETH adalah cryptocurrency terbesar kedua setelah Bitcoin.</p>
+                </div>
+                <div class="crypto-card fade-in">
+                    <div class="separator" style="clear: both;"><a href="https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEh-2f3HPJCX8iKsDZxi2mX6jEZO_s_5Bn1fy7p7b-rhDndHzEviYy9fpumOQ7JgteCU-kLcjzrnzPYHj2LfqAQgidVELChtLTZ0xx21p5-qFyOz45fRfD61VPAOKZ6erm775hM4QuiEapz79kbmjX_v0Z2Sz2MMxe4J1SeasSJOzbYyfZh4Klz1LHDNxb-z/s512/bnb.png" style="display: block; padding: 1em 0; text-align: center; "><img alt="" border="0" width="200" data-original-height="512" data-original-width="512" src="https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEh-2f3HPJCX8iKsDZxi2mX6jEZO_s_5Bn1fy7p7b-rhDndHzEviYy9fpumOQ7JgteCU-kLcjzrnzPYHj2LfqAQgidVELChtLTZ0xx21p5-qFyOz45fRfD61VPAOKZ6erm775hM4QuiEapz79kbmjX_v0Z2Sz2MMxe4J1SeasSJOzbYyfZh4Klz1LHDNxb-z/s200/bnb.png"/></a></div>
+                    <h3>Binance Coin</h3>
+                    <p class="crypto-symbol">BNB</p>
+                    <p>Token utility dari Binance exchange. BNB digunakan untuk membayar fee trading, staking, dan berbagai layanan dalam ekosistem Binance.</p>
+                </div>
+                <div class="crypto-card fade-in">
+                    <div class="separator" style="clear: both;"><a href="https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEgLRfoPwudT-TrNg8XldYDHXsJmWXClhE1L7BoY1L2CFdtMNfJeCVeqaRrgYRxAg_w7XvPaS56xT-bN7TNzX5ZfcJGElmqcJ0GWUv7TAcn3uef-EVX5ShIhuoAHvC2WsMOjbZsp5GKDEgF05Zd8_KcTzA04bMrIfvB8pMWWbjuYQ3jdbYs2FYiqdYeu2niG/s512/sol.png" style="display: block; padding: 1em 0; text-align: center; "><img alt="" border="0" width="200" data-original-height="512" data-original-width="512" src="https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEgLRfoPwudT-TrNg8XldYDHXsJmWXClhE1L7BoY1L2CFdtMNfJeCVeqaRrgYRxAg_w7XvPaS56xT-bN7TNzX5ZfcJGElmqcJ0GWUv7TAcn3uef-EVX5ShIhuoAHvC2WsMOjbZsp5GKDEgF05Zd8_KcTzA04bMrIfvB8pMWWbjuYQ3jdbYs2FYiqdYeu2niG/s200/sol.png"/></a></div>
+                    <h3>Solana</h3>
+                    <p class="crypto-symbol">SOL</p>
+                    <p>Blockchain berkecepatan tinggi dengan biaya transaksi rendah. Solana mendukung NFT, DeFi, dan aplikasi terdesentralisasi dengan performa optimal.</p>
+                </div>
+                <div class="crypto-card fade-in">
+                    <div class="separator" style="clear: both;"><a href="https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEithKKXQCtVzZWWHyWQhCJbaDVLhS7exmOtoqQwjJwoDeba5uLc19MVnr5xowpUjpC2ddDsdPbwuMUGNkAuEFBWUfVb1KSbXW4cfT6ljsqcMbIf0lC5Se_eiOQseB0oMIZ5_VPTI7UOTSuw_smXw3G3jsMrdbPYS2obTLtQGHf7Xc62meZvuYnJhwmhKf_k/s512/chainlink.png" style="display: block; padding: 1em 0; text-align: center; "><img alt="" border="0" width="200" data-original-height="512" data-original-width="512" src="https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEithKKXQCtVzZWWHyWQhCJbaDVLhS7exmOtoqQwjJwoDeba5uLc19MVnr5xowpUjpC2ddDsdPbwuMUGNkAuEFBWUfVb1KSbXW4cfT6ljsqcMbIf0lC5Se_eiOQseB0oMIZ5_VPTI7UOTSuw_smXw3G3jsMrdbPYS2obTLtQGHf7Xc62meZvuYnJhwmhKf_k/s200/chainlink.png"/></a></div>
+                    <h3>Chainlink</h3>
+                    <p class="crypto-symbol">LINK</p>
+                    <p>Chainlink (LINK) adalah jaringan oracle terdesentralisasi yang bertujuan untuk menghubungkan smart contract dengan data dari dunia nyata.
+Masalah yang Dipecahkan (Oracle Problem)
+Kontrak pintar pada dasarnya "buta" terhadap informasi dunia nyata (seperti harga pasar, hasil olahraga, atau data cuaca) karena beroperasi di lingkungan blockchain yang terisolasi. Chainlink memecahkan masalah oracle ini dengan menyediakan data eksternal yang terverifikasi dan andal.</p>
+                </div>
+                <div class="crypto-card fade-in">
+                    <div class="separator" style="clear: both;"><a href="https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEh_3LEnMPJS0Ol7qwizmRLG6LYymbyiUrMO_4yn1sKOKm6IYpx_gXtmjQSNZhSNExdKs1IfFYV89NrAG5plILAbTowFDYFKFhjgEuK4-i2JMcGmMgf8oHYU6LTXoOrQkSpJU-43gO9zrPVJ8PsdnIP29L2tG95P1OSEOht3LurpQr2z46BXts8m4bYlwsTb/s512/cardano.png" style="display: block; padding: 1em 0; text-align: center; "><img alt="" border="0" width="200" data-original-height="512" data-original-width="512" src="https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEh_3LEnMPJS0Ol7qwizmRLG6LYymbyiUrMO_4yn1sKOKm6IYpx_gXtmjQSNZhSNExdKs1IfFYV89NrAG5plILAbTowFDYFKFhjgEuK4-i2JMcGmMgf8oHYU6LTXoOrQkSpJU-43gO9zrPVJ8PsdnIP29L2tG95P1OSEOht3LurpQr2z46BXts8m4bYlwsTb/s200/cardano.png"/></a></div>
+                    <h3>Cardano</h3>
+                    <p class="crypto-symbol">ADA</p>
+                    <p>Cardano adalah platform blockchain Proof-of-Stake (PoS) generasi ketiga yang dibangun di atas dasar riset akademis dan filosofi pengembangan yang ditinjau sejawat (peer-reviewed).Cardano diciptakan untuk menyelesaikan tiga masalah utama yang dihadapi oleh blockchain generasi sebelumnya (Bitcoin sebagai Generasi 1, Ethereum sebagai Generasi 2):
+
+Skalabilitas: Kemampuan untuk memproses volume transaksi yang besar dengan cepat.
+
+Interoperabilitas: Kemampuan untuk berinteraksi dengan blockchain dan sistem keuangan tradisional lainnya.
+
+Keberlanjutan (Sustainability): Model tata kelola (governance) yang jelas dan mekanisme pendanaan mandiri untuk pengembangan di masa depan.</p>
+                </div>
+                <div class="crypto-card fade-in">
+                    <div class="separator" style="clear: both;"><a href="https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEgfxngdoqvgGhD_NG0axpOzuxiGLgASH65KvDLp2hSgDr_oAXTVJON66ygENkZmHF9tlX-8XfH_F9pkx4Mix4YfOOcRLeFN96QESOmIa4SHmaoH9wdAkRnm3yHL6LKsbgkpn2admne-YPMTr2sLHnF2cVlt6-g5bamTQpNsrVyOCfUgbw0Rih4a7CQzr4Hl/s512/polkadot.png" style="display: block; padding: 1em 0; text-align: center; "><img alt="" border="0" width="200" data-original-height="512" data-original-width="512" src="https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEgfxngdoqvgGhD_NG0axpOzuxiGLgASH65KvDLp2hSgDr_oAXTVJON66ygENkZmHF9tlX-8XfH_F9pkx4Mix4YfOOcRLeFN96QESOmIa4SHmaoH9wdAkRnm3yHL6LKsbgkpn2admne-YPMTr2sLHnF2cVlt6-g5bamTQpNsrVyOCfUgbw0Rih4a7CQzr4Hl/s200/polkadot.png"/></a></div>
+                    <h3>Polkadot</h3>
+                    <p class="crypto-symbol">DOT</p>
+                    <p>Polkadot adalah platform blockchain multi-rantai terdesentralisasi yang dirancang untuk memungkinkan berbagai blockchain yang berbeda (disebut Parachains) untuk saling terhubung, bertukar data, dan mentransfer nilai secara aman.
+
+Sederhananya, jika Ethereum adalah satu komputer super canggih, Polkadot adalah internet dari blockchain atau "blockchain yang menghubungkan blockchain lain."</p>
+                </div>
+                <div class="crypto-card fade-in">
+                    <div class="separator" style="clear: both;"><a href="https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEiRIofo-UtgTg1JZUSw37ADLXSGf8BiO8VYyoSaeWEW_vA4Hc0Zj8eQuwDpfqr6W-FllhNpS6Xs5CMh4vmNZAuJO97x-Fn4Nl7i_t-LNTkPhJFcTncYVzxvhNNQ31XHAo6l2GtH6ckEoyHSnJBtFn1cWLx790ht4_UYe38-X7gyIfb-V6JZVV64lbO7JLqz/s512/xrp.png" style="display: block; padding: 1em 0; text-align: center; "><img alt="" border="0" width="200" data-original-height="512" data-original-width="512" src="https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEiRIofo-UtgTg1JZUSw37ADLXSGf8BiO8VYyoSaeWEW_vA4Hc0Zj8eQuwDpfqr6W-FllhNpS6Xs5CMh4vmNZAuJO97x-Fn4Nl7i_t-LNTkPhJFcTncYVzxvhNNQ31XHAo6l2GtH6ckEoyHSnJBtFn1cWLx790ht4_UYe38-X7gyIfb-V6JZVV64lbO7JLqz/s200/xrp.png"/></a></div>
+                    <h3>Xrp</h3>
+                    <p class="crypto-symbol">XRP</p>
+                    <p>XRP adalah cryptocurrency yang beroperasi di atas buku besar terdistribusi publik yang disebut XRP Ledger (XRPL).
+
+XRPL secara fundamental dirancang sebagai sistem pembayaran real-time gross settlement (RTGS). Tujuannya adalah menjadi alternatif yang lebih cepat, lebih murah, dan lebih efisien daripada sistem transfer uang internasional tradisional, seperti SWIFT.
+
+XRPL tidak dirancang untuk menampung aplikasi terdesentralisasi (dApps) skala besar seperti Ethereum atau Cardano, melainkan fokus pada kecepatan dan efisiensi pembayaran.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+	<head>
+    <style>
+        body { font-family: Arial, sans-serif; margin: 20px; }
+        table { width: 100%; border-collapse: collapse; margin-top: 20px; }
+        th, td { border: 1px solid #ddd; padding: 8px; text-align: left; }
+        th { background-color: #f2f2f2; }
+        .price-up { color: green; }
+        .price-down { color: red; }
+        .last-update { font-size: 12px; color: gray; margin-top: 10px; }
+    </style>
+</head>
+<body>
+    <h1>Daftar Harga Cryptocurrency Real-Time</h1>
+    <p>Harga diperbarui setiap 30 detik dari CoinGecko API.</p>
+    <table id="crypto-table">
+        <thead>
+            <tr>
+                <th>Nama</th>
+                <th>Simbol</th>
+                <th>Harga (USD)</th>
+                <th>Perubahan 24h (%)</th>
+            </tr>
+        </thead>
+        <tbody>
+            <!-- Data akan diisi oleh JavaScript -->
+        </tbody>
+    </table>
+    <div class="last-update" id="last-update">Terakhir diperbarui: Memuat...</div>
+
+    <script>
+        const apiUrl = 'https://api.coingecko.com/api/v3/coins/markets?vs_currency=usd&ids=bitcoin,ethereum,binancecoin,cardano,solana&order=market_cap_desc&per_page=5&page=1&sparkline=false';
+        const tableBody = document.querySelector('#crypto-table tbody');
+        const lastUpdate = document.getElementById('last-update');
+
+        async function fetchCryptoData() {
+            try {
+                const response = await fetch(apiUrl);
+                const data = await response.json();
+                tableBody.innerHTML = ''; // Clear existing rows
+                data.forEach(coin => {
+                    const changeClass = coin.price_change_percentage_24h >= 0 ? 'price-up' : 'price-down';
+                    const row = `
+                        <tr>
+                            <td>${coin.name}</td>
+                            <td>${coin.symbol.toUpperCase()}</td>
+                            <td>$${coin.current_price.toFixed(2)}</td>
+                            <td class="${changeClass}">${coin.price_change_percentage_24h.toFixed(2)}%</td>
+                        </tr>
+                    `;
+                    tableBody.innerHTML += row;
+                });
+                lastUpdate.textContent = `Terakhir diperbarui: ${new Date().toLocaleString()}`;
+            } catch (error) {
+                console.error('Error fetching data:', error);
+                lastUpdate.textContent = 'Error: Gagal memuat data. Coba refresh halaman.';
+            }
+        }
+
+        // Fetch data initially and then every 30 seconds
+        fetchCryptoData();
+        setInterval(fetchCryptoData, 30000);
+    </script>
+</body>
+<!-- How it Works Section -->
+    <section class="how-it-works">
+        <div class="container">
+            <h2 class="section-title" style="color: white;">Bagaimana Cara Kerja Cryptocurrency?</h2>
+            <p class="section-subtitle" style="color: #cbd5e1;">Memahami mekanisme di balik teknologi cryptocurrency</p>
+            <div class="timeline">
+                <div class="timeline-item fade-in">
+                    <div class="timeline-number">1</div>
+                    <div class="timeline-content">
+                        <h3>Blockchain Technology</h3>
+                        <p>Semua transaksi cryptocurrency dicatat dalam blockchain - sebuah buku besar digital yang terdesentralisasi. Setiap blok berisi kumpulan transaksi yang terverifikasi dan terhubung dengan blok sebelumnya, membentuk rantai yang tidak dapat diubah.</p>
+                    </div>
+                </div>
+                <div class="timeline-item fade-in">
+                    <div class="timeline-number">2</div>
+                    <div class="timeline-content">
+                        <h3>Enkripsi Kriptografi</h3>
+                        <p>Setiap pengguna memiliki sepasang kunci: kunci publik (seperti nomor rekening) dan kunci privat (seperti PIN). Kunci privat digunakan untuk menandatangani transaksi secara digital, memastikan hanya pemilik yang sah yang dapat mengakses aset mereka.</p>
+                    </div>
+                </div>
+                <div class="timeline-item fade-in">
+                    <div class="timeline-number">3</div>
+                    <div class="timeline-content">
+                        <h3>Mining & Validasi</h3>
+                        <p>Transaksi baru divalidasi oleh jaringan komputer yang disebut miners. Mereka memecahkan masalah matematika kompleks untuk mengkonfirmasi transaksi dan menambahkannya ke blockchain. Sebagai imbalan, miners menerima cryptocurrency sebagai reward.</p>
+                    </div>
+                </div>
+                <div class="timeline-item fade-in">
+                    <div class="timeline-number">4</div>
+                    <div class="timeline-content">
+                        <h3>Desentralisasi</h3>
+                        <p>Tidak ada otoritas pusat yang mengontrol cryptocurrency. Jaringan dikelola oleh ribuan node di seluruh dunia, membuatnya resisten terhadap sensor dan manipulasi. Setiap orang dapat menjadi bagian dari jaringan.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Benefits Section -->
+    <section class="benefits-section">
+        <div class="container">
+            <h2 class="section-title fade-in">Keuntungan & Risiko Cryptocurrency</h2>
+            <p class="section-subtitle fade-in">Pahami kedua sisi sebelum memulai investasi</p>
+            <div class="benefits-grid">
+                <div>
+                    <h3 style="color: var(--primary); font-size: 2rem; margin-bottom: 2rem;">✅ Keuntungan</h3>
+                    <div class="benefit-item fade-in">
+                        <div class="benefit-icon">🎯</div>
+                        <div class="benefit-content">
+                            <h4>Kontrol Penuh</h4>
+                            <p>Anda memiliki kontrol penuh atas aset Anda tanpa ketergantungan pada bank atau lembaga keuangan.</p>
+                        </div>
+                    </div>
+                    <div class="benefit-item fade-in">
+                        <div class="benefit-icon">💸</div>
+                        <div class="benefit-content">
+                            <h4>Biaya Rendah</h4>
+                            <p>Biaya transaksi cryptocurrency umumnya lebih rendah dibanding transfer bank internasional.</p>
+                        </div>
+                    </div>
+                    <div class="benefit-item fade-in">
+                        <div class="benefit-icon">🔓</div>
+                        <div class="benefit-content">
+                            <h4>Akses Universal</h4>
+                            <p>Siapa saja dengan koneksi internet dapat menggunakan cryptocurrency, termasuk mereka yang tidak memiliki akses perbankan.</p>
+                        </div>
+                    </div>
+                    <div class="benefit-item fade-in">
+                        <div class="benefit-icon">📈</div>
+                        <div class="benefit-content">
+                            <h4>Potensi Apresiasi</h4>
+                            <p>Nilai cryptocurrency dapat meningkat signifikan, memberikan peluang keuntungan investasi yang menarik.</p>
+                        </div>
+                    </div>
+                </div>
+                <div>
+                    <h3 style="color: #ef4444; font-size: 2rem; margin-bottom: 2rem;">⚠️ Risiko</h3>
+                    <div class="benefit-item fade-in">
+                        <div class="benefit-icon" style="background: linear-gradient(135deg, #ef4444, #dc2626);">📉</div>
+                        <div class="benefit-content">
+                            <h4>Volatilitas Tinggi</h4>
+                            <p>Harga cryptocurrency sangat fluktuatif dan dapat berubah drastis dalam waktu singkat.</p>
+                        </div>
+                    </div>
+                    <div class="benefit-item fade-in">
+                        <div class="benefit-icon" style="background: linear-gradient(135deg, #ef4444, #dc2626);">🎭</div>
+                        <div class="benefit-content">
+                            <h4>Risiko Keamanan</h4>
+                            <p>Jika kehilangan kunci privat atau menjadi korban hacking, aset Anda bisa hilang selamanya.</p>
+                        </div>
+                    </div>
+                    <div class="benefit-item fade-in">
+                        <div class="benefit-icon" style="background: linear-gradient(135deg, #ef4444, #dc2626);">⚖️</div>
+                        <div class="benefit-content">
+                            <h4>Regulasi Belum Jelas</h4>
+                            <p>Status legal cryptocurrency masih berkembang di banyak negara, menciptakan ketidakpastian hukum.</p>
+                        </div>
+                    </div>
+                    <div class="benefit-item fade-in">
+                        <div class="benefit-icon" style="background: linear-gradient(135deg, #ef4444, #dc2626);">🔍</div>
+                        <div class="benefit-content">
+                            <h4>Penipuan & Scam</h4>
+                            <p>Banyak proyek cryptocurrency palsu dan skema Ponzi yang menargetkan investor pemula.</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+	
+	<!-- Features Section -->
+    <section class="features-section">
+        <div class="container">
+            <h2 class="section-title fade-in">Grup Telegram Grimurti</h2>
+            <p class="section-subtitle fade-in">Cryptocurrency adalah masa depan keuangan digital dengan potensi yang sangat besar</p>
+            <div class="features-grid">
+                <div class="feature-card fade-in">
+				<div class="separator" style="clear: both;"><a href="https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEhVP7uqJr-hIh5dEI2NtnTj6LMbcZRBVp0aX7nPkUV9O_Cn44-YOi5gliEqkh3MxUn5yYOthYCK-XJlSBcmP6jurgEg0AzHAODRFftnZQhPpyD7Er5eo4V5gKZLMOcv_hoq84ugSqHiepRcJkCtOXZ8R82jxZ6aymrZsjvUDxMiGj-lb_jE3B2GJ3IQG7aX/s1280/1.jpg" style="display: block; padding: 1em 0; text-align: center; "><img alt="" border="0" height="400" data-original-height="1280" data-original-width="576" src="https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEhVP7uqJr-hIh5dEI2NtnTj6LMbcZRBVp0aX7nPkUV9O_Cn44-YOi5gliEqkh3MxUn5yYOthYCK-XJlSBcmP6jurgEg0AzHAODRFftnZQhPpyD7Er5eo4V5gKZLMOcv_hoq84ugSqHiepRcJkCtOXZ8R82jxZ6aymrZsjvUDxMiGj-lb_jE3B2GJ3IQG7aX/s400/1.jpg"/></a></div>                    
+				<h3>ANALISIS TEKNIKAL</h3>
+                    <p>Outlook Analisis Teknikal Coin</p>
+                </div>
+                <div class="feature-card fade-in">
+				<div class="separator" style="clear: both;"><a href="https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEjbtFTexn7Y_FkQQCpzvnDZ7ms0nRqH67oy-g5-ivo7_etA9l4PyKG7hwAx4N6gyAz5KvfKlJLpvOlvywl_UlGrcB-yczOOgiLxq83-OfRpuWUszdJFpEbT8PjyQKikDaGDnxdtGDPVN4D7V1AWsgj_MmWH23lhjoWO0yA9MJFQgDd-6B_650d7d9Bc5G3m/s1280/11.jpg" style="display: block; padding: 1em 0; text-align: center; "><img alt="" border="0" height="400" data-original-height="1280" data-original-width="576" src="https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEjbtFTexn7Y_FkQQCpzvnDZ7ms0nRqH67oy-g5-ivo7_etA9l4PyKG7hwAx4N6gyAz5KvfKlJLpvOlvywl_UlGrcB-yczOOgiLxq83-OfRpuWUszdJFpEbT8PjyQKikDaGDnxdtGDPVN4D7V1AWsgj_MmWH23lhjoWO0yA9MJFQgDd-6B_650d7d9Bc5G3m/s400/11.jpg"/></a></div>                    
+				<h3>NEWS UPDATE</h3>
+                    <p>Memberikan Informasi terupdate seputar Crypto</p>
+                </div>
+                <div class="feature-card fade-in">
+				<div class="separator" style="clear: both;"><a href="https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEj_GYsRop9Ix1bd2Oe4kTqauVdMwKv41irLteejbBC8gcDjwC5eaoCP0MNR9Nws38vZS_LGmtE-a-qaCsx3_Gms4vUoIlkKf0bWiJFD7R2MGUJZfxAEvvOINLXqJQos4UFKPWm64-ip7DRfLAR5mIZ7j0yQx3U73SmJCRegiiaJ7TCB0umTykC0QG0FJocU/s1280/111.jpg" style="display: block; padding: 1em 0; text-align: center; "><img alt="" border="0" height="400" data-original-height="1280" data-original-width="576" src="https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEj_GYsRop9Ix1bd2Oe4kTqauVdMwKv41irLteejbBC8gcDjwC5eaoCP0MNR9Nws38vZS_LGmtE-a-qaCsx3_Gms4vUoIlkKf0bWiJFD7R2MGUJZfxAEvvOINLXqJQos4UFKPWm64-ip7DRfLAR5mIZ7j0yQx3U73SmJCRegiiaJ7TCB0umTykC0QG0FJocU/s400/111.jpg"/></a></div>                    
+				<h3>TRANSAKSI WHALE</h3>
+                    <p>Melihat pergerakan Whale dengan melihat Transaksi mereka</p>
+                </div>
+                <div class="feature-card fade-in">
+				<div class="separator" style="clear: both;"><a href="https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEgDXfMZlyx1FotZWk3gjXTsnBJPOXEMdf1JXbJuKMOeQQ0li1qHn3yvgCid7iPCP3jCwIYZuFllmyskS8moRbx7kRiPUCufzCGRiAw01ojAHENUkbHkXXicTuV3lLDQS0_ylPh-K86_QKJvVBnoRFayfp3X31bAn3dhOUmGGM98wli3oZCjLikZjDTM5X_Y/s1280/1111.jpg" style="display: block; padding: 1em 0; text-align: center; "><img alt="" border="0" height="400" data-original-height="1280" data-original-width="576" src="https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEgDXfMZlyx1FotZWk3gjXTsnBJPOXEMdf1JXbJuKMOeQQ0li1qHn3yvgCid7iPCP3jCwIYZuFllmyskS8moRbx7kRiPUCufzCGRiAw01ojAHENUkbHkXXicTuV3lLDQS0_ylPh-K86_QKJvVBnoRFayfp3X31bAn3dhOUmGGM98wli3oZCjLikZjDTM5X_Y/s400/1111.jpg"/></a></div>                    
+				<h3>EVENT PENTING CRYPTO</h3>
+                    <p>Event penting yang berefek ke harga crypto akan terus di update setiap bulannya</p>
+                </div>
+                <div class="feature-card fade-in">
+				<div class="separator" style="clear: both;"><a href="https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEgje-sCqtcOYWX1CxPVurfCMCPxaIKP0qHhrQvwINuVPbHP0js1SsDHSw7Wcxi0FSc3cCbiw51LlVMBXsX3Heiz-dRLvJG3vLn3_fbhKHLooDXqLiWjbBarRTn1ToPUy0MOSgkd36-ibq0vcYLVHTsiYxmteJ2YQbN9p4xAczFiIrXMZkIP2nMM-nMFXIpi/s1280/11111.jpg" style="display: block; padding: 1em 0; text-align: center; "><img alt="" border="0" height="400" data-original-height="1280" data-original-width="576" src="https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEgje-sCqtcOYWX1CxPVurfCMCPxaIKP0qHhrQvwINuVPbHP0js1SsDHSw7Wcxi0FSc3cCbiw51LlVMBXsX3Heiz-dRLvJG3vLn3_fbhKHLooDXqLiWjbBarRTn1ToPUy0MOSgkd36-ibq0vcYLVHTsiYxmteJ2YQbN9p4xAczFiIrXMZkIP2nMM-nMFXIpi/s400/11111.jpg"/></a></div>                    
+				<h3>DUSTING ATTACK / RUGPULL</h3>
+                    <p>Update terbaru tentang penipuan crypto yang sedang terjadi, potensi penipuan, rugpull token dan lain lain</p>
+                </div>
+                <div class="feature-card fade-in">
+				<div class="separator" style="clear: both;"><a href="https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEg5noE8Qw7LXY_tnbv7Ve755lxnViSHbVHf7vucuZOaPEVY77BiE9WJRv6m9igmY09aZNTznDYqJ3WMZAs0AeqRHyqgFKKp_aP7wkc2OKCjq32d45M63E4AaEkc3-y2024fCKvIE94r3VBsGuujJP-EdjSU7Hm8we1Dx-CGaqrpk4bJIMT6wIzezoOam1MY/s1280/111111.jpg" style="display: block; padding: 1em 0; text-align: center; "><img alt="" border="0" height="400" data-original-height="1280" data-original-width="576" src="https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEg5noE8Qw7LXY_tnbv7Ve755lxnViSHbVHf7vucuZOaPEVY77BiE9WJRv6m9igmY09aZNTznDYqJ3WMZAs0AeqRHyqgFKKp_aP7wkc2OKCjq32d45M63E4AaEkc3-y2024fCKvIE94r3VBsGuujJP-EdjSU7Hm8we1Dx-CGaqrpk4bJIMT6wIzezoOam1MY/s400/111111.jpg"/></a></div>                    
+				<h3>SATOSHI NAKAMOTO</h3>
+                    <p>Siapa itu Satoshi Nakamoto, dan berita / isu terbaru tentang Satoshi</p>
+                </div>
+				<div class="feature-card fade-in">
+				<div class="separator" style="clear: both;"><a href="https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEjlgpDuSi-4R2IJbTa1lQck866KPCCfE_37_Anxo948DnRDn9f9FMa_YPsoaiaNMqcRfVIv7LlPdaTMa8RZRMddI0rUt3p-3uvMCuaTivZT0JVLw4kUZNNK3aiBUylE0JVoVPKZIW44sk5SpaMXw-NEtc3Bu_GzF6zUrZ3S47lHp3Im1iFma1f0yNa1Akm7/s1280/1111111.jpg" style="display: block; padding: 1em 0; text-align: center; "><img alt="" border="0" height="400" data-original-height="1280" data-original-width="576" src="https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEjlgpDuSi-4R2IJbTa1lQck866KPCCfE_37_Anxo948DnRDn9f9FMa_YPsoaiaNMqcRfVIv7LlPdaTMa8RZRMddI0rUt3p-3uvMCuaTivZT0JVLw4kUZNNK3aiBUylE0JVoVPKZIW44sk5SpaMXw-NEtc3Bu_GzF6zUrZ3S47lHp3Im1iFma1f0yNa1Akm7/s400/1111111.jpg"/></a></div>
+                    <h3>FUNDAMENTAL COIN</h3>
+                    <p>Membahas tentang fundamental beberapa Coin</p>
+                </div>
+				<div class="feature-card fade-in">
+				<div class="separator" style="clear: both;"><a href="https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEgHHNe8Fd-9aZ11g9l4_PcTNkYwtmSJQBu-StnV8YInQ10-F7mj1xq3P9AHluFpBJLbEzeuiPi0K8a2ojKUcfi1IFd7lGE_xukMtOaGc2EjT4TJYp6hSxY9ogwA3IYflyPFQ0dQWWv65xkFU_TXvg2-Wa3Ud-EfPXNUyNpQ-GitIc9JnTchkIJWtsHLcBFV/s1280/11111111.jpg" style="display: block; padding: 1em 0; text-align: center; "><img alt="" border="0" height="400" data-original-height="1280" data-original-width="576" src="https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEgHHNe8Fd-9aZ11g9l4_PcTNkYwtmSJQBu-StnV8YInQ10-F7mj1xq3P9AHluFpBJLbEzeuiPi0K8a2ojKUcfi1IFd7lGE_xukMtOaGc2EjT4TJYp6hSxY9ogwA3IYflyPFQ0dQWWv65xkFU_TXvg2-Wa3Ud-EfPXNUyNpQ-GitIc9JnTchkIJWtsHLcBFV/s400/11111111.jpg"/></a></div>                    
+					<h3>RECOMENDASI</h3>
+                    <p>Beberapa Recommendation seperti Akun YouTube, Instagram, Website, Aplikasi, Event dan lain lain akan di informasikan di room ini</p>
+                </div>
+				<div class="feature-card fade-in">
+				<div class="separator" style="clear: both;"><a href="https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEiZ7LAgM9A7ksPEfY8yoaZvvMzE8QK7XQppvlr78Vk7E4hRoXzEbM1B_cD12hqhPOni9NqJm2x_rtCHlusDDqLy70LhKKJQyRmQAMllBvCp_1sDKXMiQhE90_0vnS9pw9wHxX-YVWoJ2gOv2z3lqPeI9NLjNn5mX4pa5p-oYEbi_crgtIWNEVfLzRLcNMGW/s1280/111111111.jpg" style="display: block; padding: 1em 0; text-align: center; "><img alt="" border="0" height="400" data-original-height="1280" data-original-width="576" src="https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEiZ7LAgM9A7ksPEfY8yoaZvvMzE8QK7XQppvlr78Vk7E4hRoXzEbM1B_cD12hqhPOni9NqJm2x_rtCHlusDDqLy70LhKKJQyRmQAMllBvCp_1sDKXMiQhE90_0vnS9pw9wHxX-YVWoJ2gOv2z3lqPeI9NLjNn5mX4pa5p-oYEbi_crgtIWNEVfLzRLcNMGW/s400/111111111.jpg"/></a></div>                   
+				   <h3>SEJARAH</h3>
+                    <p>Memberikan informasi Sejarah terdahulu yang berefek atau menyebabkan pasar saham ataupun Crypto anjlok</p>
+                </div>
+            </div>
+        </div>
+    </section>
+	
+
+<!-- CTA Section -->
+    <section class="cta-section">
+        <div class="container">
+            <h2>Siap Memulai Perjalanan Crypto Anda?</h2>
+            <p>Bergabunglah dengan Komunitas kami  measuk ke dunia cryptocurrency bersama</p>
+            <a href="https://t.me/grimurti" class="cta-button-white">Pelajari Lebih Lanjut</a>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer>
+        <div class="container">
+            <p>&copy; 2025 Crypto Learning. Dibuat untuk tujuan edukasi. Investasi cryptocurrency memiliki risiko tinggi - lakukan riset Anda sendiri.</p>
+        </div>
+    </footer>
+
+    <script>
+        // Scroll Animation
+        const observerOptions = {
+            threshold: 0.1,
+            rootMargin: '0px 0px -50px 0px'
+        };
+
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.classList.add('visible');
+                }
+            });
+        }, observerOptions);
+
+        document.querySelectorAll('.fade-in').forEach(el => {
+            observer.observe(el);
+        });
+
+        // Smooth Scroll
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+                const target = document.querySelector(this.getAttribute('href'));
+                if (target) {
+                    target.scrollIntoView({
+                        behavior: 'smooth',
+                        block: 'start'
+                    });
+                }
+            });
+        });
+    </script>
+</body>
+</html>
